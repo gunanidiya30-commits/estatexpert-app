@@ -1,10 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask
+from backend.routes.core.routes import core_bp
 
 def create_app():
     app = Flask(__name__)
 
-    @app.route("/")
-    def home():
-        return render_template("home.html")
+    app.register_blueprint(core_bp)
 
     return app
