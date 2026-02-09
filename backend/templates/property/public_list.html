@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Properties</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <input type="text" name="city" class="form-control" placeholder="City"
+               value="{{ request.args.get('city','') }}">
+    </div>
+    <div class="col-md-4">
+        <select name="sort" class="form-select">
+            <option value="">Sort by</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary w-100">Apply</button>
+    </div>
+</form>
+
+<div class="row">
+{% for p in properties %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ p.title }}</h5>
+                <p class="card-text">
+                    {{ p.city }}<br>
+                    ₹ {{ p.price }}
+                </p>
+                <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% if not properties %}
+<p>No properties found.</p>
+{% endif %}
+{% endblock %}

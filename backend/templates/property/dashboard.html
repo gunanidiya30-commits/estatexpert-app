@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">My Properties</h2>
+
+{% if properties %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>City</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for p in properties %}
+        <tr>
+            <td>{{ p.title }}</td>
+            <td>{{ p.city }}</td>
+            <td>₹ {{ p.price }}</td>
+            <td>{{ p.status }}</td>
+            <td>
+                {% if p.status == 'draft' %}
+                <form method="post" action="{{ url_for('property.publish', property_id=p.id) }}">
+                    <button class="btn btn-sm btn-success">Publish</button>
+                </form>
+                {% else %}
+                —
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No properties created yet.</p>
+{% endif %}
+{% endblock %}
