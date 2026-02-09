@@ -112,3 +112,36 @@ def public_list():
     conn.close()
 
     return render_template("property/public_list.html", properties=properties)
+
+@property_bp.route("/<int:property_id>")
+def detail(property_id):
+    from backend.config import get_db_connection
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM properties WHERE id = %s AND status = 'active'",
+        (property_id,)
+    )
+    property = cursor.fetchone()
+
+    if not property:
+        cursor.close()
+        conn.close()
+        abort(404)
+
+    cursor.execute(
+        "SELECT price, recorded_at FROM price_history WHERE property_id = %s ORDER BY recorded_at",
+        (property_id,)
+    )
+    price_history = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "property/detail.html",
+        property=property,
+        price_history=price_history
+    )

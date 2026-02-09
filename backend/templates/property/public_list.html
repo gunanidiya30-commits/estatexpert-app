@@ -30,7 +30,11 @@
                     {{ p.city }}<br>
                     ₹ {{ p.price }}
                 </p>
-                <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                <a href="{{ url_for('property.detail', property_id=p.id) }}"
+   class="btn btn-outline-primary btn-sm">
+   View Details
+</a>
+
             </div>
         </div>
     </div>
