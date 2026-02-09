@@ -1,0 +1,12 @@
+CREATE TABLE property_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    property_id INT NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (property_id) REFERENCES properties(id)
+        ON DELETE CASCADE
+);
